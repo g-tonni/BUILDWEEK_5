@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -16,12 +17,14 @@ public class Fattura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private Long idFattura;
+    private UUID idFattura;
 
     @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private LocalDate dataFattura;
 
     @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private int importoFattura;
 
     @Setter(AccessLevel.NONE)
@@ -32,10 +35,10 @@ public class Fattura {
     @Setter(AccessLevel.NONE)
     private Cliente cliente;
 
-    public Fattura(int importoFattura, String numeroFattura, Cliente cliente) {
+    public Fattura(int importoFattura, long numeroFattura, Cliente cliente) {
         this.dataFattura = LocalDate.now();
         this.importoFattura = importoFattura;
-        this.numeroFattura = idFattura + "/" + dataFattura.getYear();
+        this.numeroFattura = numeroFattura + "/" + dataFattura.getYear();
         this.cliente = cliente;
     }
 }

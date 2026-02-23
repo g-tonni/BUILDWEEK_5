@@ -6,22 +6,17 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(
-        name = "indirizzo",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"cliente_id", "tipo"})
-        }
-)
+@Table(name = "indirizzi")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString(exclude = {"cliente", "comune"})
+@ToString(exclude = {"comune"})
 public class Indirizzo {
 
     @Id
     @GeneratedValue
     @Column(name = "id_indirizzo", nullable = false, updatable = false)
+    @Setter(AccessLevel.NONE)
     private UUID idIndirizzo;
 
     @Column(nullable = false)
@@ -30,24 +25,22 @@ public class Indirizzo {
     @Column(nullable = false)
     private String civico;
 
-    @Column(name = "localita")
+    @Column(nullable = false)
     private String localita;
 
     @Column(nullable = false)
     private String cap;
 
-    // Tipo indirizzo (SEDE_LEGALE / SEDE_OPERATIVA)
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TipoIndirizzo tipo;
-
-    // Relazione con Cliente
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
     // Relazione con Comune (anagrafica centralizzata)
     @ManyToOne(optional = false)
-    @JoinColumn(name = "comune_id", nullable = false)
+    @JoinColumn(name = "id_comune", nullable = false)
     private Comune comune;
+
+    public Indirizzo(String via, String civico, String localita, String cap, Comune comune) {
+        this.via = via;
+        this.civico = civico;
+        this.localita = localita;
+        this.cap = cap;
+        this.comune = comune;
+    }
 }
