@@ -46,7 +46,7 @@ public class Cliente {
 
     @OneToOne
     @JoinColumn(name = "id_contatto")
-    private String idContatto;
+    private UUID idContatto;
 
     public Cliente() {
     }
