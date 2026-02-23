@@ -32,8 +32,8 @@ public class Fattura {
     @Setter(AccessLevel.NONE)
     private Cliente cliente;
 
-    public Fattura(LocalDate dataFattura, int importoFattura, String numeroFattura, Cliente cliente) {
-        this.dataFattura = dataFattura;
+    public Fattura(int importoFattura, String numeroFattura, Cliente cliente) {
+        this.dataFattura = LocalDate.now();
         this.importoFattura = importoFattura;
         this.numeroFattura = idFattura + "/" + dataFattura.getYear();
         this.cliente = cliente;
