@@ -46,7 +46,7 @@ public class Cliente {
 
     @OneToOne
     @JoinColumn(name = "id_contatto")
-    private String idContatto;
+    private Contatto idContatto;
 
     public Cliente() {
     }
@@ -59,7 +59,7 @@ public class Cliente {
                    LocalDate dataUltimoContatto,
                    String fatturatoAnnuale,
                    String pec,
-                   long telefono,
+                   String telefono,
                    String sedeLegale,
                    String sedeOperativa,
                    String idContatto) {
@@ -141,11 +141,11 @@ public class Cliente {
         this.pec = pec;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -165,11 +165,11 @@ public class Cliente {
         this.sedeOperativa = sedeOperativa;
     }
 
-    public String getIdContatto() {
+    public Contatto getIdContatto() {
         return idContatto;
     }
 
-    public void setIdContatto(String idContatto) {
+    public void setIdContatto(Contatto idContatto) {
         this.idContatto = idContatto;
     }
 
