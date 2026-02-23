@@ -6,4 +6,8 @@ public class NotFoundException extends RuntimeException {
     public NotFoundException(UUID id) {
         super("La risorsa con id " + id + " non è stata trovata");
     }
+
+    public NotFoundException(String message) {
+        super("La risorsa con nome " + message + " non è stata trovata");
+    }
 }

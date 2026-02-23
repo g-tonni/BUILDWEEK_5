@@ -4,6 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,20 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class CSVService {
+public class CSVComuniService {
 
-    public void leggiProvince() {
+    private final ComuniService comuniService;
+
+    @Autowired
+    public CSVComuniService(ComuniService comuniService) {
+        this.comuniService = comuniService;
+    }
+
+    public void saveAllComuni() {
 
         try {
 
-            InputStream is = new ClassPathResource("provinceItaliane.csv").getInputStream();
+            InputStream is = new ClassPathResource("comuniItaliani.csv").getInputStream();
 
             BOMInputStream bis = BOMInputStream.builder()
                     .setInputStream(is)
@@ -37,14 +45,14 @@ public class CSVService {
                     .build()
                     .parse(reader);
 
-            System.out.println(parser.getHeaderMap());
             for (CSVRecord record : parser) {
 
-                String sigla = record.get("Sigla");
-                String provincia = record.get("Provincia");
-                String regione = record.get("Regione");
+                String codiceProvincia = record.get("Codice Provincia (Storico)(1)");
+                String progressivo = record.get("Progressivo del Comune (2)");
+                String nome = record.get("Denominazione in italiano");
+                String provincia = record.get(3);
 
-                System.out.println(sigla + " - " + provincia + " - " + regione);
+                comuniService.saveComune(codiceProvincia, progressivo, nome, provincia);
             }
 
         } catch (IOException e) {
