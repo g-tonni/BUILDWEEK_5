@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Contatto {
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID id_contatto;
     private String email;
     private String nome;
     private String cognome;
@@ -33,12 +33,8 @@ public class Contatto {
 
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public UUID getId() {
+        return id_contatto;
     }
 
     public String getEmail() {
@@ -84,7 +80,7 @@ public class Contatto {
     @Override
     public String toString() {
         return "Contatto{" +
-                "id='" + id + '\'' +
+                "id='" + id_contatto + '\'' +
                 ", email='" + email + '\'' +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
