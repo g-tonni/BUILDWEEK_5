@@ -1,10 +1,7 @@
 package team2.BUILDWEEK_5.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -18,6 +15,7 @@ public class Fattura {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long idFattura;
 
     @Column(nullable = false)
