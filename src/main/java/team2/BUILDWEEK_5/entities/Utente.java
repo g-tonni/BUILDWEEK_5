@@ -31,6 +31,7 @@ public class Utente {
     private String avatar;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Ruolo ruolo;
 
     public Utente(String nome, String cognome, String email, String password, String avatar) {
