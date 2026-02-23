@@ -24,16 +24,18 @@ public class Fattura {
     @Column(nullable = false)
     private int importoFattura;
 
+    @Setter(AccessLevel.NONE)
     private String numeroFattura;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_cliente")
-    //private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    @Setter(AccessLevel.NONE)
+    private Cliente cliente;
 
-    public Fattura(LocalDate dataFattura, int importoFattura, String numeroFattura/*,Cliente cliente*/) {
+    public Fattura(LocalDate dataFattura, int importoFattura, String numeroFattura, Cliente cliente) {
         this.dataFattura = dataFattura;
         this.importoFattura = importoFattura;
         this.numeroFattura = idFattura + "/" + dataFattura.getYear();
-        //this.cliente=cliente;
+        this.cliente = cliente;
     }
 }
