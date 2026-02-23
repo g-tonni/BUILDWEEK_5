@@ -1,6 +1,7 @@
 package team2.BUILDWEEK_5.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,7 +11,8 @@ import java.util.UUID;
 @Table(name = "Contatti")
 public class Contatto {
     @Id
-    private String id;
+    @GeneratedValue
+    private UUID id;
     private String email;
     private String nome;
     private String cognome;
@@ -23,7 +25,6 @@ public class Contatto {
     ;
 
     public Contatto(String email, String nome, String cognome, String telefono) {
-        this.id = UUID.randomUUID().toString();
         this.email = email;
         this.nome = nome;
         this.cognome = cognome;
