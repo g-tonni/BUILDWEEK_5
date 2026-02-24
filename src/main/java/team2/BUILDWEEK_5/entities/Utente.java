@@ -1,5 +1,6 @@
 package team2.BUILDWEEK_5.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"password", "ruoli", "accountNonExpired", "accountNonLocked", "authorities", "credentialsNonExpired", "enabled"})
 public class Utente implements UserDetails {
 
     @Id
@@ -43,8 +46,8 @@ public class Utente implements UserDetails {
     @Column(nullable = false)
     private String avatar;
 
-    @OneToMany(mappedBy = "nomeRuolo")
-    private List<Ruolo> ruoliUtente;
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
+    private List<RuoloUtente> ruoli;
 
     public Utente(String nome, String cognome, String email, String password) {
         this.nome = nome;
@@ -52,11 +55,12 @@ public class Utente implements UserDetails {
         this.email = email;
         this.password = password;
         this.avatar = "https://ui-avatars.com/api/?name=" + nome + "+" + cognome;
+        this.ruoli = new ArrayList<>();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return ruoliUtente.stream().map(ruolo -> new SimpleGrantedAuthority(ruolo.getNomeRuolo())).toList();
+        return ruoli.stream().map(ruolo -> new SimpleGrantedAuthority(ruolo.getRuolo().getNomeRuolo())).toList();
     }
 
     @Override

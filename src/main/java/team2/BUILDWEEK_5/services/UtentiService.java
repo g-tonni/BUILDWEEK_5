@@ -42,7 +42,14 @@ public class UtentiService {
         if (!this.utentiRepository.findByEmail(body.email()).isEmpty())
             throw new BadRequestException("Email è gia in uso");
 
+        Ruolo ruolo = this.findRuoloByNome("USER");
+
         Utente nuovoUtente = new Utente(body.nome(), body.cognome(), body.email(), passwordEncoder.encode(body.password()));
+
+
+        RuoloUtente ruoloUtente = new RuoloUtente(nuovoUtente, ruolo);
+
+        nuovoUtente.getRuoli().add(ruoloUtente);
 
         this.utentiRepository.save(nuovoUtente);
 
@@ -50,7 +57,6 @@ public class UtentiService {
 
         return nuovoUtente;
     }
-
 
     public Ruolo saveRuolo(RuoloDTO body) {
         if (this.findRuoloByNome(body.ruolo()) == null) throw new BadRequestException("Ruolo già esistente");
