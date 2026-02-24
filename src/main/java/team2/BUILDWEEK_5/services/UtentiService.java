@@ -31,7 +31,7 @@ public class UtentiService {
     public Utente findUtenteById(UUID utenteId) {
         return this.utentiRepository.findById(utenteId).orElseThrow(() -> new NotFoundException(utenteId));
     }
-
+    
     public Utente saveUtente(UtenteDTO body) {
         if (!this.utentiRepository.findByEmail(body.email()).isEmpty())
             throw new BadRequestException("Email è gia in uso");
@@ -51,6 +51,8 @@ public class UtentiService {
 
         Ruolo nuovoRuolo = new Ruolo(body.ruolo());
 
+        this.ruoliRepository.save(nuovoRuolo);
+
         System.out.println("Ruolo salvato");
 
         return nuovoRuolo;
@@ -61,6 +63,8 @@ public class UtentiService {
         Ruolo ruoloTrovato = this.findRuoloByNome(body.nomeRuolo());
 
         RuoloUtente nuovoRuoloUtente = new RuoloUtente(utenteTrovato, ruoloTrovato);
+
+        this.ruoliUtentiRepository.save(nuovoRuoloUtente);
 
         System.out.println("Ruolo associato all'utente");
 
