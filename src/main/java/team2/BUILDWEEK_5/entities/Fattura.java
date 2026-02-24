@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Fattura {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Setter(AccessLevel.NONE)
     private UUID idFattura;
 
