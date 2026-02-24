@@ -7,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team2.BUILDWEEK_5.entities.Utente;
 import team2.BUILDWEEK_5.exceptions.ValidationException;
+import team2.BUILDWEEK_5.payloads.LoginDTO;
+import team2.BUILDWEEK_5.payloads.LoginResponseDTO;
 import team2.BUILDWEEK_5.payloads.UtenteDTO;
 import team2.BUILDWEEK_5.services.AuthService;
 import team2.BUILDWEEK_5.services.UtentiService;
@@ -34,5 +36,10 @@ public class AuthController {
         } else {
             return this.utentiService.saveUtente(body);
         }
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDTO login(@RequestBody LoginDTO body) {
+        return new LoginResponseDTO(this.authService.checkCredentialsAndGenerateToken(body));
     }
 }

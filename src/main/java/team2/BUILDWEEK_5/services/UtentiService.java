@@ -34,6 +34,10 @@ public class UtentiService {
         return this.utentiRepository.findById(utenteId).orElseThrow(() -> new NotFoundException(utenteId));
     }
 
+    public Utente findByEmail(String email) {
+        return this.utentiRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
+    }
+
     public Utente saveUtente(UtenteDTO body) {
         if (!this.utentiRepository.findByEmail(body.email()).isEmpty())
             throw new BadRequestException("Email è gia in uso");
