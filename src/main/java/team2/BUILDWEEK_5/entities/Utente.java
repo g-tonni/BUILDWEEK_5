@@ -37,16 +37,11 @@ public class Utente {
     @Column(nullable = false)
     private String avatar;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Ruolo ruolo;
-
     public Utente(String nome, String cognome, String email, String password) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
         this.avatar = "https://ui-avatars.com/api/?name=" + nome + "+" + cognome;
-        this.ruolo = Ruolo.UTENTE;
     }
 }
