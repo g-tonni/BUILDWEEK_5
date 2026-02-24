@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ContattoRepository extends JpaRepository<Contatto, UUID> {
     Optional<Contatto> findByEmail(String email);
+
+    Optional<Contatto> findByTelefono(String telefono);
 }

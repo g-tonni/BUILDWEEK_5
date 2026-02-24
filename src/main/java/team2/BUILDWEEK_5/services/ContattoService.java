@@ -45,9 +45,13 @@ public class ContattoService {
 
     public Contatto findByIdAndUpdate(UUID id, ContattoDTO payload) {
         Contatto f = this.findById(id);
-        if (payload.email() != f.getEmail() &&
+        if (!payload.email().equals(f.getEmail()) &&
                 this.cr.findByEmail(payload.email()).isPresent()) {
             throw new AlreadyExsists("La mail è già registrata");
+        }
+        if (!payload.telefono().equals(f.getTelefono()) &&
+                this.cr.findByTelefono(payload.telefono()).isPresent()) {
+            throw new AlreadyExsists("Il numero di telefono è già registrato");
         }
         ;
         f.setEmail(payload.email());
