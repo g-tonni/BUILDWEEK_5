@@ -43,8 +43,8 @@ public class Utente implements UserDetails {
     @Column(nullable = false)
     private String avatar;
 
-    @OneToMany(mappedBy = "ruolo")
-    private List<RuoloUtente> ruoliUtente;
+    @OneToMany(mappedBy = "nomeRuolo")
+    private List<Ruolo> ruoliUtente;
 
     public Utente(String nome, String cognome, String email, String password) {
         this.nome = nome;
@@ -56,7 +56,7 @@ public class Utente implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return ruoliUtente.stream().map(ruolo -> new SimpleGrantedAuthority(ruolo.getRuolo().getNomeRuolo())).toList();
+        return ruoliUtente.stream().map(ruolo -> new SimpleGrantedAuthority(ruolo.getNomeRuolo())).toList();
     }
 
     @Override

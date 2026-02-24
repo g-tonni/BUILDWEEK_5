@@ -6,9 +6,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team2.BUILDWEEK_5.entities.Utente;
+import team2.BUILDWEEK_5.exceptions.ValidationException;
 import team2.BUILDWEEK_5.payloads.UtenteDTO;
 import team2.BUILDWEEK_5.services.AuthService;
 import team2.BUILDWEEK_5.services.UtentiService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,5 +25,14 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public Utente saveUtente(@RequestBody @Validated UtenteDTO body, BindingResult validationResults) {
 
+        if (validationResults.hasErrors()) {
+
+            List<String> errorsList = validationResults.getFieldErrors()
+                    .stream().map(fieldError -> fieldError.getDefaultMessage()).toList();
+
+            throw new ValidationException(errorsList);
+        } else {
+            return this.utentiService.saveUtente(body);
+        }
     }
 }
