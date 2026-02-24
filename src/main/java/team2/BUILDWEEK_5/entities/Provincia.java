@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
@@ -13,6 +14,7 @@ public class Provincia {
     @Id
     private String codiceProvincia;
 
+    @Setter
     private String nome;
 
     private String regione;

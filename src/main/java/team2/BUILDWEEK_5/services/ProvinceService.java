@@ -26,6 +26,36 @@ public class ProvinceService {
         if (nome.equals("Verbania")) {
             nomeDefinitivo = "Verbano-Cusio-Ossola";
             codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Monza-Brianza")) {
+            nomeDefinitivo = "Monza e della Brianza";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Aosta")) {
+            nomeDefinitivo = "Valle d'Aosta/Vallée d'Aoste";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Bolzano")) {
+            nomeDefinitivo = "Bolzano/Bozen";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("La-Spezia")) {
+            nomeDefinitivo = "La Spezia";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Ascoli-Piceno")) {
+            nomeDefinitivo = "Ascoli Piceno";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Reggio-Emilia")) {
+            nomeDefinitivo = "Reggio nell'Emilia";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Reggio-Calabria")) {
+            nomeDefinitivo = "Reggio Calabria";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Forli-Cesena")) {
+            nomeDefinitivo = "Forlì-Cesena";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Pesaro-Urbino")) {
+            nomeDefinitivo = "Pesaro e Urbino";
+            codiceProvinciaDefinitivo = codiceProvincia;
+        } else if (nome.equals("Vibo-Valentia")) {
+            nomeDefinitivo = "Vibo Valentia";
+            codiceProvinciaDefinitivo = codiceProvincia;
         } else if (codiceProvincia.equals("CI")) {
             nomeDefinitivo = "Sud Sardegna";
             codiceProvinciaDefinitivo = "SU";
