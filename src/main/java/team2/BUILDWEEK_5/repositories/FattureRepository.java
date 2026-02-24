@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface FattureRepository extends JpaRepository<Fattura, String> {
+public interface FattureRepository extends JpaRepository<Fattura, UUID> {
 
     List<Fattura> findFattureByClienteAndDataFattura(UUID idCliente, LocalDate dataFattura);
 

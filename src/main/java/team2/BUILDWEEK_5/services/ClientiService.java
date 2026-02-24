@@ -20,6 +20,6 @@ public class ClientiService {
     }
 
     public Cliente findById(UUID idCliente) {
-        return this.clientiRepository.findById(idCliente).orElseThrow(() -> new NotFoundException("Cliente non trovato. Id: " + idCliente));
+        return this.clientiRepository.findById(idCliente).orElseThrow(() -> new NotFoundException(idCliente));
     }
 }
