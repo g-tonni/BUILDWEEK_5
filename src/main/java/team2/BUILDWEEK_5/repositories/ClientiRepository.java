@@ -16,4 +16,6 @@ public interface ClientiRepository extends JpaRepository<Cliente, UUID> {
     Optional<Cliente> findByDataInserimento(LocalDate dataInserimento);
 
     Optional<Cliente> findByDataUltimoContatto(LocalDate dataInserimento);
+
+    Optional<Cliente> findById(UUID idCliente);
 }
