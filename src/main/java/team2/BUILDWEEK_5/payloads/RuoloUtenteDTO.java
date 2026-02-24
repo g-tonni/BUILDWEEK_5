@@ -7,7 +7,7 @@ import java.util.UUID;
 public record RuoloUtenteDTO(
         @NotNull(message = "L'id utente deve essere inserito")
         UUID idUtente,
-        @NotNull(message = "L'id ruolo deve essere inserito")
-        UUID idRuolo
+        @NotNull(message = "Il ruolo deve essere inserito")
+        String nomeRuolo
 ) {
 }
