@@ -5,7 +5,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Utente {
+public class Utente implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -37,11 +43,41 @@ public class Utente {
     @Column(nullable = false)
     private String avatar;
 
+    @OneToMany(mappedBy = "ruolo")
+    private List<RuoloUtente> ruoliUtente;
+
     public Utente(String nome, String cognome, String email, String password) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
         this.avatar = "https://ui-avatars.com/api/?name=" + nome + "+" + cognome;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return ruoliUtente.stream().map(ruolo -> new SimpleGrantedAuthority(ruolo.getRuolo().getNomeRuolo())).toList();
+    }
+
+    @Override
+    public @Nullable String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "idUtente=" + idUtente +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }

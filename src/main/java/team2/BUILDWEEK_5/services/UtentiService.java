@@ -1,6 +1,7 @@
 package team2.BUILDWEEK_5.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Ruolo;
 import team2.BUILDWEEK_5.entities.RuoloUtente;
@@ -23,6 +24,7 @@ public class UtentiService {
     private final UtentiRepository utentiRepository;
     private final RuoliRepository ruoliRepository;
     private final RuoliUtentiRepository ruoliUtentiRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Ruolo findRuoloByNome(String nome) {
         return this.ruoliRepository.findById(nome).orElseThrow(() -> new NotFoundException(nome));
@@ -31,12 +33,12 @@ public class UtentiService {
     public Utente findUtenteById(UUID utenteId) {
         return this.utentiRepository.findById(utenteId).orElseThrow(() -> new NotFoundException(utenteId));
     }
-    
+
     public Utente saveUtente(UtenteDTO body) {
         if (!this.utentiRepository.findByEmail(body.email()).isEmpty())
             throw new BadRequestException("Email è gia in uso");
 
-        Utente nuovoUtente = new Utente(body.nome(), body.cognome(), body.email(), body.password());
+        Utente nuovoUtente = new Utente(body.nome(), body.cognome(), body.email(), passwordEncoder.encode(body.password()));
 
         this.utentiRepository.save(nuovoUtente);
 
