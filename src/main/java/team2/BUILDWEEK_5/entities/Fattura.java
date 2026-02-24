@@ -35,7 +35,11 @@ public class Fattura {
     @Setter(AccessLevel.NONE)
     private Cliente cliente;
 
-    public Fattura(int importoFattura, long numeroFattura, Cliente cliente) {
+    @ManyToOne
+    private StatoFattura statoFattura;
+
+    public Fattura(int importoFattura, Cliente cliente, StatoFattura statoFattura) {
+        this.statoFattura = statoFattura;
         this.dataFattura = LocalDate.now();
         this.importoFattura = importoFattura;
         this.numeroFattura = numeroFattura + "/" + dataFattura.getYear();

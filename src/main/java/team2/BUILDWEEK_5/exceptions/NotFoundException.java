@@ -8,6 +8,6 @@ public class NotFoundException extends RuntimeException {
     }
 
     public NotFoundException(String message) {
-        super("La risorsa con nome " + message + " non è stata trovata");
+        super("La risorsa con " + message + " non è stata trovata");
     }
 }
