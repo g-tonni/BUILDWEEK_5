@@ -34,7 +34,7 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
 
         String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.startsWith("Bearer "))
-            throw new UnauthorizedException("Inserire il token nell'header nel formato corretto");
+            throw new UnauthorizedException("Inserire il token nell'header nel formato corretto" + authorization);
 
         String accessToken = authorization.replace("Bearer ", "");
 
@@ -53,6 +53,6 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathMatcher().match("/auth/**", request.getServletPath());
+        return new AntPathMatcher().match("/auth/register", request.getServletPath());
     }
 }
