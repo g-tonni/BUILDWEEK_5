@@ -83,4 +83,5 @@ public class Cliente {
         this.sedeOperativa = sedeOperativa;
         this.contatto = contatto;
     }
+
 }
