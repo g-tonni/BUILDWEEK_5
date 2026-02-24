@@ -1,10 +1,7 @@
 package team2.BUILDWEEK_5.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -17,6 +14,7 @@ import java.util.UUID;
 public class Contatto {
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private UUID idContatto;
 
     @Column(nullable = false)
