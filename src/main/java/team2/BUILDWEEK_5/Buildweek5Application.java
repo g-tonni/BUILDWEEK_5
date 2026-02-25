@@ -10,5 +10,4 @@ public class Buildweek5Application {
         SpringApplication.run(Buildweek5Application.class, args);
     }
 
-
 }

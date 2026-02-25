@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Contatto;
-import team2.BUILDWEEK_5.exceptions.AlreadyExsists;
+import team2.BUILDWEEK_5.exceptions.AlreadyExists;
 import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.ContattoDTO;
 import team2.BUILDWEEK_5.repositories.ContattoRepository;
@@ -47,11 +47,11 @@ public class ContattoService {
         Contatto f = this.findById(id);
         if (!payload.email().equals(f.getEmail()) &&
                 this.cr.findByEmail(payload.email()).isPresent()) {
-            throw new AlreadyExsists("La mail è già registrata");
+            throw new AlreadyExists("La mail è già registrata");
         }
         if (!payload.telefono().equals(f.getTelefono()) &&
                 this.cr.findByTelefono(payload.telefono()).isPresent()) {
-            throw new AlreadyExsists("Il numero di telefono è già registrato");
+            throw new AlreadyExists("Il numero di telefono è già registrato");
         }
         ;
         f.setEmail(payload.email());

@@ -1,6 +1,7 @@
 package team2.BUILDWEEK_5.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,8 +16,8 @@ public class ErrorsHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(AlreadyExsists.class)
-    public ErrorDTO handleBadRequest(AlreadyExsists ex) {
+    @ExceptionHandler(AlreadyExists.class)
+    public ErrorDTO handleBadRequest(AlreadyExists ex) {
         return new ErrorDTO(ex.getMessage());
     }
 
@@ -38,4 +39,9 @@ public class ErrorsHandler {
         return new ErrorsDTO(ex.getErrorsList());
     }
 
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorDTO handleAuthorizationDenied(AuthorizationDeniedException ex) {
+        return new ErrorDTO(ex.getMessage());
+    }
 }
