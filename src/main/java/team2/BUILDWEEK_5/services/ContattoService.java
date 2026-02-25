@@ -38,6 +38,12 @@ public class ContattoService {
     }
 
     public Contatto save(ContattoDTO payload) {
+        if (cr.existsByEmail(payload.email())) {
+            throw new AlreadyExists("Il contatto con email " + payload.email() + " é giá esistente");
+        }
+        if (cr.existsByTelefono(payload.telefono())) {
+            throw new AlreadyExists("Il contatto con numero di telefono " + payload.telefono() + " é giá esistente");
+        }
         Contatto nContatto = new Contatto(payload.email(), payload.nome(), payload.cognome(), payload.telefono());
         this.cr.save(nContatto);
         return nContatto;

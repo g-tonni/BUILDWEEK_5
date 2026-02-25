@@ -12,4 +12,8 @@ public interface ContattoRepository extends JpaRepository<Contatto, UUID> {
     Optional<Contatto> findByEmail(String email);
 
     Optional<Contatto> findByTelefono(String telefono);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByTelefono(String telefono);
 }

@@ -7,7 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Cliente;
-import team2.BUILDWEEK_5.exceptions.AlreadyExsists;
+import team2.BUILDWEEK_5.entities.Contatto;
+import team2.BUILDWEEK_5.exceptions.AlreadyExists;
 import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.ClientiDTO;
 import team2.BUILDWEEK_5.repositories.ClientiRepository;
@@ -21,10 +22,12 @@ import java.util.UUID;
 public class ClientiService {
 
     private final ClientiRepository clientiRepository;
+    private final ContattoService contattoService;
 
     @Autowired
-    public ClientiService(ClientiRepository clientiRepository) {
+    public ClientiService(ClientiRepository clientiRepository, ContattoService contattoService) {
         this.clientiRepository = clientiRepository;
+        this.contattoService = contattoService;
     }
 
     public Page<Cliente> findAll(int page, int size, String orderBy, String sortCriteria) {
@@ -47,21 +50,22 @@ public class ClientiService {
     public Cliente save(ClientiDTO clientiDTO) {
 
         if (clientiRepository.findByEmail(clientiDTO.email()).isPresent()) {
-            throw new AlreadyExsists("L'e-mail è già utilizzata.");
+            throw new AlreadyExists("L'e-mail è già utilizzata.");
         }
+
+        Contatto found = contattoService.findById(clientiDTO.idContatto());
 
         Cliente newCliente = new Cliente(
                 clientiDTO.ragioneSociale(),
                 clientiDTO.partitaIva(),
                 clientiDTO.email(),
-                clientiDTO.dataInserimento(),
                 clientiDTO.dataUltimoContatto(),
                 clientiDTO.fatturatoAnnuale(),
                 clientiDTO.pec(),
                 clientiDTO.telefono(),
                 clientiDTO.sedeLegale(),
                 clientiDTO.sedeOperativa(),
-                clientiDTO.contatto()
+                found
         );
 
         return this.clientiRepository.save(newCliente);
@@ -74,6 +78,7 @@ public class ClientiService {
 
     public Cliente update(UUID id, ClientiDTO payload) {
         Cliente found = this.findById(id);
+        Contatto contattoFound = contattoService.findById(payload.idContatto());
         found.setRagioneSociale(payload.ragioneSociale());
         found.setEmail(payload.email());
         found.setDataUltimoContatto(payload.dataUltimoContatto());
@@ -82,7 +87,7 @@ public class ClientiService {
         found.setTelefono(payload.telefono());
         found.setSedeLegale(payload.sedeLegale());
         found.setSedeOperativa(payload.sedeOperativa());
-        found.setContatto(payload.contatto());
+        found.setContatto(contattoFound);
 
         return this.clientiRepository.save(found);
     }
