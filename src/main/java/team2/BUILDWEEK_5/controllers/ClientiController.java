@@ -2,6 +2,7 @@ package team2.BUILDWEEK_5.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -57,11 +58,6 @@ public class ClientiController {
         return this.clientiService.findById(id);
     }
 
-    @DeleteMapping
-    public void findByIdAndDelete(UUID id) {
-        this.clientiService.findByIdAndDelete(id);
-    }
-
 //    @PutMapping("/{id}")
 //    public Cliente updateProfile(@PathVariable UUID id, @RequestBody @Validated ClientiDTO payload) {
 //        return this.clientiService.update(id, payload);
@@ -80,5 +76,12 @@ public class ClientiController {
         } else {
             return this.contattoService.save(contattoDTO);
         }
+    }
+
+    @PatchMapping("/{idCliente}/disattiva")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Cliente disattivaCliente(@PathVariable UUID idCliente) {
+        return clientiService.disattivaCliente(idCliente);
     }
 }

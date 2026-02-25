@@ -7,7 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import team2.BUILDWEEK_5.entities.Cliente;
 import team2.BUILDWEEK_5.entities.Fattura;
+import team2.BUILDWEEK_5.exceptions.BadRequestException;
 import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.FattureDTO;
 import team2.BUILDWEEK_5.repositories.FattureRepository;
@@ -30,7 +32,13 @@ public class FattureService {
     }
 
     public Fattura saveFattura(FattureDTO payload) {
-        Fattura newFattura = new Fattura(payload.importoFattura(), clientiService.findById(payload.idCliente()), statoFattureService.findStatoFatturaById("Da pagare"));
+        Cliente clienteFound = clientiService.findById(payload.idCliente());
+
+        if (!clienteFound.isAttivo()) {
+            throw new BadRequestException("Il cliente non é piú attivo");
+        }
+
+        Fattura newFattura = new Fattura(payload.importoFattura(), clienteFound, statoFattureService.findStatoFatturaById("Da pagare"), fattureRepository.count() + 1);
 
         fattureRepository.save(newFattura);
 

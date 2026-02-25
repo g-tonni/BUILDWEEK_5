@@ -59,6 +59,11 @@ public class Cliente {
     @JoinColumn(name = "id_contatto")
     private Contatto contatto;
 
+    @Column(nullable = false)
+    private boolean attivo;
+
+    private LocalDate dataCancellazione;
+
     public Cliente(
             RagioneSociale ragioneSociale,
             String partitaIva,
@@ -81,6 +86,7 @@ public class Cliente {
         this.sedeLegale = sedeLegale;
         this.sedeOperativa = sedeOperativa;
         this.contatto = contatto;
+        this.attivo = true;
     }
 
 }
