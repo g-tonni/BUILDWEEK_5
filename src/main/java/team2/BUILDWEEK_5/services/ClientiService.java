@@ -82,21 +82,23 @@ public class ClientiService {
         this.clientiRepository.delete(found);
     }
 
-//    public Cliente update(UUID id, ClientiDTO payload) {
-//        Cliente found = this.findById(id);
-//        Contatto contattoFound = contattoService.findById(payload.idContatto());
-//        found.setRagioneSociale(payload.ragioneSociale());
-//        found.setEmail(payload.email());
-//        found.setDataUltimoContatto(payload.dataUltimoContatto());
-//        found.setFatturatoAnnuale(payload.fatturatoAnnuale());
-//        found.setPec(payload.pec());
-//        found.setTelefono(payload.telefono());
-//        found.setSedeLegale(payload.sedeLegale());
-//        found.setSedeOperativa(payload.sedeOperativa());
-//        found.setContatto(contattoFound);
-//
-//        return this.clientiRepository.save(found);
-//    }
+    public Cliente update(UUID id, ClientiDTO payload) {
+        Cliente found = this.findById(id);
+        Indirizzo sedeLegaleFound = this.indirizziService.findById(payload.sedeLegaleId());
+        Indirizzo sedeOperativaFound = this.indirizziService.findById(payload.sedeOperativaId());
+        Contatto contattoFound = contattoService.findById(payload.idContatto());
+        found.setRagioneSociale(payload.ragioneSociale());
+        found.setEmail(payload.email());
+        found.setDataUltimoContatto(payload.dataUltimoContatto());
+        found.setFatturatoAnnuale(payload.fatturatoAnnuale());
+        found.setPec(payload.pec());
+        found.setTelefono(payload.telefono());
+        found.setSedeLegale(sedeLegaleFound);
+        found.setSedeOperativa(sedeOperativaFound);
+        found.setContatto(contattoFound);
+
+        return this.clientiRepository.save(found);
+    }
 
     public Cliente findById(UUID idCliente) {
         return this.clientiRepository.findById(idCliente).orElseThrow(() -> new NotFoundException(idCliente));
