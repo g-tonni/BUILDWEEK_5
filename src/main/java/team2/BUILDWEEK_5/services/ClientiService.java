@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Cliente;
 import team2.BUILDWEEK_5.entities.Contatto;
+import team2.BUILDWEEK_5.entities.Indirizzo;
 import team2.BUILDWEEK_5.exceptions.AlreadyExists;
 import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.ClientiDTO;
@@ -23,11 +24,13 @@ public class ClientiService {
 
     private final ClientiRepository clientiRepository;
     private final ContattoService contattoService;
+    private final IndirizziService indirizziService;
 
     @Autowired
-    public ClientiService(ClientiRepository clientiRepository, ContattoService contattoService) {
+    public ClientiService(ClientiRepository clientiRepository, ContattoService contattoService, IndirizziService indirizziService) {
         this.clientiRepository = clientiRepository;
         this.contattoService = contattoService;
+        this.indirizziService = indirizziService;
     }
 
     public Page<Cliente> findAll(int page, int size, String orderBy, String sortCriteria) {
@@ -55,6 +58,9 @@ public class ClientiService {
 
         Contatto found = contattoService.findById(clientiDTO.idContatto());
 
+        Indirizzo sedeLegaleFound = indirizziService.findById(clientiDTO.sedeLegaleId());
+        Indirizzo sedeOperativaFound = indirizziService.findById(clientiDTO.sedeOperativaId());
+
         Cliente newCliente = new Cliente(
                 clientiDTO.ragioneSociale(),
                 clientiDTO.partitaIva(),
@@ -63,8 +69,8 @@ public class ClientiService {
                 clientiDTO.fatturatoAnnuale(),
                 clientiDTO.pec(),
                 clientiDTO.telefono(),
-                clientiDTO.sedeLegale(),
-                clientiDTO.sedeOperativa(),
+                sedeLegaleFound,
+                sedeOperativaFound,
                 found
         );
 
@@ -76,21 +82,21 @@ public class ClientiService {
         this.clientiRepository.delete(found);
     }
 
-    public Cliente update(UUID id, ClientiDTO payload) {
-        Cliente found = this.findById(id);
-        Contatto contattoFound = contattoService.findById(payload.idContatto());
-        found.setRagioneSociale(payload.ragioneSociale());
-        found.setEmail(payload.email());
-        found.setDataUltimoContatto(payload.dataUltimoContatto());
-        found.setFatturatoAnnuale(payload.fatturatoAnnuale());
-        found.setPec(payload.pec());
-        found.setTelefono(payload.telefono());
-        found.setSedeLegale(payload.sedeLegale());
-        found.setSedeOperativa(payload.sedeOperativa());
-        found.setContatto(contattoFound);
-
-        return this.clientiRepository.save(found);
-    }
+//    public Cliente update(UUID id, ClientiDTO payload) {
+//        Cliente found = this.findById(id);
+//        Contatto contattoFound = contattoService.findById(payload.idContatto());
+//        found.setRagioneSociale(payload.ragioneSociale());
+//        found.setEmail(payload.email());
+//        found.setDataUltimoContatto(payload.dataUltimoContatto());
+//        found.setFatturatoAnnuale(payload.fatturatoAnnuale());
+//        found.setPec(payload.pec());
+//        found.setTelefono(payload.telefono());
+//        found.setSedeLegale(payload.sedeLegale());
+//        found.setSedeOperativa(payload.sedeOperativa());
+//        found.setContatto(contattoFound);
+//
+//        return this.clientiRepository.save(found);
+//    }
 
     public Cliente findById(UUID idCliente) {
         return this.clientiRepository.findById(idCliente).orElseThrow(() -> new NotFoundException(idCliente));
