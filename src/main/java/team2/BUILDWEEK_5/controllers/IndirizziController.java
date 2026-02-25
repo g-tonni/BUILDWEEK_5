@@ -2,6 +2,9 @@ package team2.BUILDWEEK_5.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import team2.BUILDWEEK_5.entities.Indirizzo;
@@ -22,32 +25,49 @@ public class IndirizziController {
         this.indirizziService = indirizziService;
     }
 
-    // 1) GET ALL
+    // GET ALL
     @GetMapping
     public List<Indirizzo> getAll() {
         return indirizziService.findAllIndirizzi();
     }
 
-    // 2) GET BY ID
+    // GET PAGINATO
+    @GetMapping("/page")
+    public Page<Indirizzo> getAllPaged(@PageableDefault(size = 10) Pageable pageable) {
+        return indirizziService.findAllIndirizziPaged(pageable);
+    }
+
+    // GET FILTRATO PAGINATO
+    @GetMapping("/page/filter")
+    public Page<Indirizzo> getFiltered(
+            @RequestParam(required = false) String localita,
+            @RequestParam(required = false) String cap,
+            @RequestParam(required = false) UUID idComune,
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
+        return indirizziService.findIndirizziFiltered(localita, cap, idComune, pageable);
+    }
+
+    // GET BY ID
     @GetMapping("/{id}")
     public Indirizzo getById(@PathVariable UUID id) {
         return indirizziService.findById(id);
     }
 
-    // 3) CREATE
+    // CREATE
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Indirizzo save(@RequestBody @Valid IndirizzoDTO body) {
         return indirizziService.saveIndirizzo(body);
     }
 
-    // 4) UPDATE
+    // UPDATE
     @PutMapping("/{id}")
     public Indirizzo update(@PathVariable UUID id, @RequestBody @Valid IndirizzoDTO body) {
         return indirizziService.findByIdAndUpdate(id, body);
     }
 
-    // 5) DELETE
+    // DELETE
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
