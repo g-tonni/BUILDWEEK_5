@@ -63,4 +63,8 @@ public class FattureController {
             return this.statoFattureService.saveStatoFattura(payload);
         }
     }
+
+//    @DeleteMapping()
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    public void
 }

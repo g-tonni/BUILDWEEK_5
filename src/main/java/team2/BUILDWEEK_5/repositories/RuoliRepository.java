@@ -6,4 +6,6 @@ import team2.BUILDWEEK_5.entities.Ruolo;
 
 @Repository
 public interface RuoliRepository extends JpaRepository<Ruolo, String> {
+
+
 }
