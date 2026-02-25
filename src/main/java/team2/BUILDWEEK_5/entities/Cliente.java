@@ -35,7 +35,6 @@ public class Cliente {
     private LocalDate dataInserimento;
 
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     private LocalDate dataUltimoContatto;
 
     @Column(nullable = false)
