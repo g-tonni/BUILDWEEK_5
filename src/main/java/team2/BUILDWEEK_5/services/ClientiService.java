@@ -26,11 +26,13 @@ public class ClientiService {
     private final ContattoService contattoService;
     private final IndirizziService indirizziService;
 
+
     @Autowired
     public ClientiService(ClientiRepository clientiRepository, ContattoService contattoService, IndirizziService indirizziService) {
         this.clientiRepository = clientiRepository;
         this.contattoService = contattoService;
         this.indirizziService = indirizziService;
+
     }
 
     public Page<Cliente> findAll(int page, int size, String orderBy, String sortCriteria) {
@@ -77,9 +79,18 @@ public class ClientiService {
         return this.clientiRepository.save(newCliente);
     }
 
-    public void findByIdAndDelete(UUID id) {
+    public Cliente disattivaCliente(UUID id) {
         Cliente found = this.findById(id);
-        this.clientiRepository.delete(found);
+
+        found.setAttivo(false);
+
+        found.setDataCancellazione(LocalDate.now());
+
+        this.clientiRepository.save(found);
+
+        System.out.println("Cliente disattivato");
+
+        return found;
     }
 
     public Cliente update(UUID id, ClientiDTO payload) {

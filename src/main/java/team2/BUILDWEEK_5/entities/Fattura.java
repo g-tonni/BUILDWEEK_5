@@ -1,5 +1,6 @@
 package team2.BUILDWEEK_5.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"cliente"})
 public class Fattura {
 
     @Id
@@ -36,9 +38,10 @@ public class Fattura {
     private Cliente cliente;
 
     @ManyToOne
+    @JoinColumn(name = "stato_fattura")
     private StatoFattura statoFattura;
 
-    public Fattura(int importoFattura, Cliente cliente, StatoFattura statoFattura) {
+    public Fattura(int importoFattura, Cliente cliente, StatoFattura statoFattura, long numeroFattura) {
         this.statoFattura = statoFattura;
         this.dataFattura = LocalDate.now();
         this.importoFattura = importoFattura;

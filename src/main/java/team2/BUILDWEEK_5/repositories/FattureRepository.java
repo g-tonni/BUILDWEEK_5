@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
 public interface FattureRepository extends JpaRepository<Fattura, UUID> {
 
-    List<Fattura> findFattureByClienteAndDataFattura(UUID idCliente, LocalDate dataFattura);
+    List<Fattura> findByClienteAndDataFattura(UUID idCliente, LocalDate dataFattura);
 
+    List<Fattura> findByCliente(UUID idCliente);
 }

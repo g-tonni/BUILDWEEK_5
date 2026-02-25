@@ -6,9 +6,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import team2.BUILDWEEK_5.payloads.RuoloDTO;
+import team2.BUILDWEEK_5.payloads.StatoFattureDTO;
 import team2.BUILDWEEK_5.payloads.UtenteDTO;
 import team2.BUILDWEEK_5.services.CSVProvinceService;
 import team2.BUILDWEEK_5.services.ProvinceService;
+import team2.BUILDWEEK_5.services.StatoFattureService;
 import team2.BUILDWEEK_5.services.UtentiService;
 
 @Component
@@ -18,13 +20,14 @@ public class CSVProvinceRunner implements CommandLineRunner {
     private final CSVProvinceService csvService;
     private final ProvinceService provinceService;
     private final UtentiService utentiService;
+    private final StatoFattureService statoFattureService;
     private final String nomeAdmin;
     private final String cognomeAdmin;
     private final String emailAdmin;
     private final String passwordAdmin;
 
     @Autowired
-    public CSVProvinceRunner(CSVProvinceService csvService, ProvinceService provinceService, UtentiService utentiService,
+    public CSVProvinceRunner(CSVProvinceService csvService, ProvinceService provinceService, UtentiService utentiService, StatoFattureService statoFattureService,
                              @Value("${NOME_ADMIN}") String nomeAdmin,
                              @Value("${COGNOME_ADMIN}") String cognomeAdmin,
                              @Value("${EMAIL_ADMIN}") String emailAdmin,
@@ -32,6 +35,7 @@ public class CSVProvinceRunner implements CommandLineRunner {
         this.csvService = csvService;
         this.provinceService = provinceService;
         this.utentiService = utentiService;
+        this.statoFattureService = statoFattureService;
         this.nomeAdmin = nomeAdmin;
         this.cognomeAdmin = cognomeAdmin;
         this.emailAdmin = emailAdmin;
@@ -49,6 +53,12 @@ public class CSVProvinceRunner implements CommandLineRunner {
         }
         if (utentiService.findAllUtentiList().isEmpty()) {
             utentiService.saveAdmin(new UtenteDTO(nomeAdmin, cognomeAdmin, emailAdmin, passwordAdmin));
+        }
+        if (statoFattureService.findAllStatiFatture().isEmpty()) {
+            statoFattureService.saveStatoFattura(new StatoFattureDTO("Da pagare"));
+            statoFattureService.saveStatoFattura(new StatoFattureDTO("Pagata"));
+            statoFattureService.saveStatoFattura(new StatoFattureDTO("Scaduta"));
+            statoFattureService.saveStatoFattura(new StatoFattureDTO("Contestata"));
         }
     }
 }

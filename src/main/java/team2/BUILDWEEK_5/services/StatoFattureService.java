@@ -7,6 +7,8 @@ import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.StatoFattureDTO;
 import team2.BUILDWEEK_5.repositories.StatoFattureRepository;
 
+import java.util.List;
+
 @Service
 public class StatoFattureService {
 
@@ -27,5 +29,9 @@ public class StatoFattureService {
 
     public StatoFattura findStatoFatturaById(String nomeStato) {
         return statoFattureRepository.findById(nomeStato).orElseThrow(() -> new NotFoundException(nomeStato));
+    }
+
+    public List<StatoFattura> findAllStatiFatture() {
+        return this.statoFattureRepository.findAll();
     }
 }
