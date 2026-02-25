@@ -38,5 +38,4 @@ public class UtentiController {
             return this.utentiService.saveRuolo(ruoloDTO);
         }
     }
-
 }

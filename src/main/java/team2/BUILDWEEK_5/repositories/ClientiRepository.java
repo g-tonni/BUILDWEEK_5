@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import team2.BUILDWEEK_5.entities.Cliente;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,5 +17,16 @@ public interface ClientiRepository extends JpaRepository<Cliente, UUID> {
     Optional<Cliente> findByDataInserimento(LocalDate dataInserimento);
 
     Optional<Cliente> findByDataUltimoContatto(LocalDate dataInserimento);
+
+    Optional<Cliente> findByTelefono(String telefono);
+
+    Optional<Cliente> findByEmail(String email);
+
+    List<Cliente> findAllByFatturatoAnnuale(String fatturatoAnnuale);
+
+    List<Cliente> findAllByDataInserimento(LocalDate dataInserimento);
+
+    Optional<Cliente> findByFatturatoAnnuale(String fatturatoAnnuale);
+
 
 }
