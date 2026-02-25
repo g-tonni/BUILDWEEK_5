@@ -111,4 +111,10 @@ public class ClientiService {
     public List<Cliente> findByFatturatoAnnuale(String fatturato) {
         return this.clientiRepository.findAllByFatturatoAnnuale(fatturato);
     }
+
+    public Contatto getContattoByIdCliente(UUID id) {
+        Cliente found = this.findById(id);
+        return found.getContatto();
+    }
+    
 }

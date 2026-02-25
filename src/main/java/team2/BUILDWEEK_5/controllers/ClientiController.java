@@ -62,10 +62,10 @@ public class ClientiController {
         this.clientiService.findByIdAndDelete(id);
     }
 
-//    @PutMapping("/{id}")
-//    public Cliente updateProfile(@PathVariable UUID id, @RequestBody @Validated ClientiDTO payload) {
-//        return this.clientiService.update(id, payload);
-//    }
+    @PutMapping("/{id}")
+    public Cliente updateCliente(@PathVariable UUID id, @RequestBody @Validated ClientiDTO payload) {
+        return this.clientiService.update(id, payload);
+    }
 
     @PostMapping("/contatti")
     @ResponseStatus(HttpStatus.CREATED)
@@ -80,5 +80,10 @@ public class ClientiController {
         } else {
             return this.contattoService.save(contattoDTO);
         }
+    }
+
+    @GetMapping("/{id}/contatto")
+    public Contatto getContattoByIdCliente(@PathVariable UUID id) {
+        return this.clientiService.getContattoByIdCliente(id);
     }
 }
