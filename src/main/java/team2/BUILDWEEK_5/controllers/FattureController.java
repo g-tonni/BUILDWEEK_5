@@ -3,6 +3,7 @@ package team2.BUILDWEEK_5.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import team2.BUILDWEEK_5.entities.Fattura;
 import team2.BUILDWEEK_5.entities.StatoFattura;
 import team2.BUILDWEEK_5.exceptions.ValidationException;
+import team2.BUILDWEEK_5.payloads.CambiaStatoFatturaDTO;
 import team2.BUILDWEEK_5.payloads.FattureDTO;
 import team2.BUILDWEEK_5.payloads.StatoFattureDTO;
 import team2.BUILDWEEK_5.services.FattureService;
 import team2.BUILDWEEK_5.services.StatoFattureService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/fatture")
@@ -64,7 +67,22 @@ public class FattureController {
         }
     }
 
-//    @DeleteMapping()
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-//    public void
+    @DeleteMapping("/{idFattura}/elimina")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteFatture(@PathVariable UUID idFattura) {
+        this.fattureService.findByIdAndDelete(idFattura);
+    }
+
+    @PatchMapping("/{idFattura}/cambiaStato")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Fattura cambiaStatoFattura(@PathVariable UUID idFattura, @RequestBody @Validated CambiaStatoFatturaDTO cambiaStatoFatturaDTO, BindingResult validation) {
+        if (validation.hasErrors()) {
+            List<String> errorsList = validation.getFieldErrors()
+                    .stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+            throw new ValidationException(errorsList);
+        } else {
+            return this.fattureService.findByIdAndChangeState(idFattura, cambiaStatoFatturaDTO);
+        }
+    }
 }
