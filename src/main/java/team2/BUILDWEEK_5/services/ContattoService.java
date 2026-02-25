@@ -37,7 +37,7 @@ public class ContattoService {
         return this.cr.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
     }
 
-    public Contatto save(ContattoDTO payload) {
+    public Contatto saveC(ContattoDTO payload) {
         if (cr.existsByEmail(payload.email())) {
             throw new AlreadyExists("Il contatto con email " + payload.email() + " é giá esistente");
         }

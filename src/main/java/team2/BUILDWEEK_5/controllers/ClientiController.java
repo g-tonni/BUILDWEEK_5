@@ -78,7 +78,7 @@ public class ClientiController {
 
             throw new ValidationException(errorsList);
         } else {
-            return this.contattoService.save(contattoDTO);
+            return this.contattoService.saveC(contattoDTO);
         }
     }
 
@@ -86,4 +86,11 @@ public class ClientiController {
     public Contatto getContattoByIdCliente(@PathVariable UUID id) {
         return this.clientiService.getContattoByIdCliente(id);
     }
+
+    @PutMapping("/{id}/contatto")
+    public Contatto updateContattoByIdCliente(@PathVariable UUID id, ContattoDTO payload) {
+        Contatto found = this.getContattoByIdCliente(id);
+        return this.contattoService.findByIdAndUpdate(found.getIdContatto(), payload);
+    }
+    
 }
