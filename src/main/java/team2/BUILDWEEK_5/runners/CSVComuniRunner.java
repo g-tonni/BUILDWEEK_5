@@ -14,10 +14,12 @@ public class CSVComuniRunner implements CommandLineRunner {
     private final CSVComuniService csvService;
     private final ComuniService comuniService;
 
+
     @Autowired
     public CSVComuniRunner(CSVComuniService csvService, ComuniService comuniService) {
         this.csvService = csvService;
         this.comuniService = comuniService;
+
     }
 
     @Override
@@ -25,5 +27,6 @@ public class CSVComuniRunner implements CommandLineRunner {
         if (comuniService.findAllComuni().isEmpty()) {
             csvService.saveAllComuni();
         }
+
     }
 }

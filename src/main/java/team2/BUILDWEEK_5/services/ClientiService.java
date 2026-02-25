@@ -1,11 +1,21 @@
 package team2.BUILDWEEK_5.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Cliente;
+import team2.BUILDWEEK_5.entities.Contatto;
+import team2.BUILDWEEK_5.entities.Indirizzo;
+import team2.BUILDWEEK_5.exceptions.AlreadyExists;
 import team2.BUILDWEEK_5.exceptions.NotFoundException;
+import team2.BUILDWEEK_5.payloads.ClientiDTO;
 import team2.BUILDWEEK_5.repositories.ClientiRepository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -13,13 +23,90 @@ import java.util.UUID;
 public class ClientiService {
 
     private final ClientiRepository clientiRepository;
+    private final ContattoService contattoService;
+    private final IndirizziService indirizziService;
 
     @Autowired
-    public ClientiService(ClientiRepository clientiRepository) {
+    public ClientiService(ClientiRepository clientiRepository, ContattoService contattoService, IndirizziService indirizziService) {
         this.clientiRepository = clientiRepository;
+        this.contattoService = contattoService;
+        this.indirizziService = indirizziService;
     }
+
+    public Page<Cliente> findAll(int page, int size, String orderBy, String sortCriteria) {
+        Pageable pageable = PageRequest.of(page, size,
+                sortCriteria.equals("desc") ? Sort.by(orderBy).descending() : Sort.by(orderBy));
+        return this.clientiRepository.findAll(pageable);
+    }
+
+    public Cliente findByEmail(String email) {
+
+        return this.clientiRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(email));
+    }
+
+    public Cliente findByTelefono(String telefono) {
+        return this.clientiRepository.findByTelefono(telefono)
+                .orElseThrow(() -> new NotFoundException(telefono));
+    }
+
+    public Cliente save(ClientiDTO clientiDTO) {
+
+        if (clientiRepository.findByEmail(clientiDTO.email()).isPresent()) {
+            throw new AlreadyExists("L'e-mail è già utilizzata.");
+        }
+
+        Contatto found = contattoService.findById(clientiDTO.idContatto());
+
+        Indirizzo sedeLegaleFound = indirizziService.findById(clientiDTO.sedeLegaleId());
+        Indirizzo sedeOperativaFound = indirizziService.findById(clientiDTO.sedeOperativaId());
+
+        Cliente newCliente = new Cliente(
+                clientiDTO.ragioneSociale(),
+                clientiDTO.partitaIva(),
+                clientiDTO.email(),
+                clientiDTO.dataUltimoContatto(),
+                clientiDTO.fatturatoAnnuale(),
+                clientiDTO.pec(),
+                clientiDTO.telefono(),
+                sedeLegaleFound,
+                sedeOperativaFound,
+                found
+        );
+
+        return this.clientiRepository.save(newCliente);
+    }
+
+    public void findByIdAndDelete(UUID id) {
+        Cliente found = this.findById(id);
+        this.clientiRepository.delete(found);
+    }
+
+//    public Cliente update(UUID id, ClientiDTO payload) {
+//        Cliente found = this.findById(id);
+//        Contatto contattoFound = contattoService.findById(payload.idContatto());
+//        found.setRagioneSociale(payload.ragioneSociale());
+//        found.setEmail(payload.email());
+//        found.setDataUltimoContatto(payload.dataUltimoContatto());
+//        found.setFatturatoAnnuale(payload.fatturatoAnnuale());
+//        found.setPec(payload.pec());
+//        found.setTelefono(payload.telefono());
+//        found.setSedeLegale(payload.sedeLegale());
+//        found.setSedeOperativa(payload.sedeOperativa());
+//        found.setContatto(contattoFound);
+//
+//        return this.clientiRepository.save(found);
+//    }
 
     public Cliente findById(UUID idCliente) {
         return this.clientiRepository.findById(idCliente).orElseThrow(() -> new NotFoundException(idCliente));
+    }
+
+    public List<Cliente> findAllByDataInserimentoAsc(LocalDate data) {
+        return clientiRepository.findAllByDataInserimento(data);
+    }
+
+    public List<Cliente> findByFatturatoAnnuale(String fatturato) {
+        return this.clientiRepository.findAllByFatturatoAnnuale(fatturato);
     }
 }

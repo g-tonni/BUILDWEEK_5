@@ -30,7 +30,7 @@ public class FattureService {
     }
 
     public Fattura saveFattura(FattureDTO payload) {
-        Fattura newFattura = new Fattura(payload.importoFattura(), clientiService.findById(payload.idCliente()), statoFattureService.findStatoFatturaFindById("Da pagare"));
+        Fattura newFattura = new Fattura(payload.importoFattura(), clientiService.findById(payload.idCliente()), statoFattureService.findStatoFatturaById("Da pagare"));
 
         fattureRepository.save(newFattura);
 

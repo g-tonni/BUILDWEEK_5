@@ -2,6 +2,7 @@ package team2.BUILDWEEK_5.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class UtentiController {
     }
 
     @PostMapping("/ruoli")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Ruolo saveRuolo(@RequestBody @Validated RuoloDTO ruoloDTO, BindingResult validationResults) {
 
         if (validationResults.hasErrors()) {
@@ -38,5 +40,4 @@ public class UtentiController {
             return this.utentiService.saveRuolo(ruoloDTO);
         }
     }
-
 }

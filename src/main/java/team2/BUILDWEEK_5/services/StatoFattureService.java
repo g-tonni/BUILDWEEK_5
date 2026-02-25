@@ -25,7 +25,7 @@ public class StatoFattureService {
         return newStatoFattura;
     }
 
-    public StatoFattura findStatoFatturaFindById(String nomeStato) {
+    public StatoFattura findStatoFatturaById(String nomeStato) {
         return statoFattureRepository.findById(nomeStato).orElseThrow(() -> new NotFoundException(nomeStato));
     }
 }

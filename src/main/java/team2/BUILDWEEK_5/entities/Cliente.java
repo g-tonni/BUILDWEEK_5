@@ -3,6 +3,7 @@ package team2.BUILDWEEK_5.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -35,11 +36,10 @@ public class Cliente {
     private LocalDate dataInserimento;
 
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     private LocalDate dataUltimoContatto;
 
     @Column(nullable = false)
-    private String fatturatoAnnuale;
+    private BigDecimal fatturatoAnnuale;
 
     @Column(nullable = false)
     private String pec;
@@ -63,9 +63,8 @@ public class Cliente {
             RagioneSociale ragioneSociale,
             String partitaIva,
             String email,
-            LocalDate dataInserimento,
             LocalDate dataUltimoContatto,
-            String fatturatoAnnuale,
+            BigDecimal fatturatoAnnuale,
             String pec,
             String telefono,
             Indirizzo sedeLegale,
@@ -74,7 +73,7 @@ public class Cliente {
         this.ragioneSociale = ragioneSociale;
         this.partitaIva = partitaIva;
         this.email = email;
-        this.dataInserimento = dataInserimento;
+        this.dataInserimento = LocalDate.now();
         this.dataUltimoContatto = dataUltimoContatto;
         this.fatturatoAnnuale = fatturatoAnnuale;
         this.pec = pec;
