@@ -59,7 +59,6 @@ public class ClientiController {
     }
 
 
-
     @PutMapping("/{id}")
     public Cliente updateCliente(@PathVariable UUID id, @RequestBody @Validated ClientiDTO payload) {
         return this.clientiService.update(id, payload);
@@ -98,4 +97,5 @@ public class ClientiController {
     public Cliente disattivaCliente(@PathVariable UUID idCliente) {
         return clientiService.disattivaCliente(idCliente);
     }
+
 }

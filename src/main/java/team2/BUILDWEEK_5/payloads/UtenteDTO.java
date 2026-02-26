@@ -2,6 +2,7 @@ package team2.BUILDWEEK_5.payloads;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record UtenteDTO(
@@ -18,7 +19,7 @@ public record UtenteDTO(
         String email,
 
         @NotBlank(message = "La password deve essere inserita")
-        //@Pattern(regexp = "^(?=.[A-Z])(?=)(?=.[@$!%?&]).{8,}$", message = "La password deve contenere almeno una maiuscola,un numero,un carattere speciale,e deve essere lunga almeno 8 caratteri!")
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "La password deve contenere almeno una maiuscola,un numero,un carattere speciale,e deve essere lunga almeno 8 caratteri!")
         String password
 ) {
 }

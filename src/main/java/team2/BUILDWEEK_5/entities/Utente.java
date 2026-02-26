@@ -31,9 +31,11 @@ public class Utente implements UserDetails {
     private UUID idUtente;
 
     @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private String nome;
 
     @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private String cognome;
 
     @Column(nullable = false)
@@ -46,7 +48,7 @@ public class Utente implements UserDetails {
     @Column(nullable = false)
     private String avatar;
 
-    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<RuoloUtente> ruoli;
 
     public Utente(String nome, String cognome, String email, String password) {
