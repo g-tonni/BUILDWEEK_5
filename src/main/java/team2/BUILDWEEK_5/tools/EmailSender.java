@@ -23,7 +23,7 @@ public class EmailSender {
 
         HttpResponse<JsonNode> response = Unirest.post("https://api.mailgun.net/v3/" + this.domain + "/messages")
                 .basicAuth("api", apiKey)
-                .queryString("from", "tonni.giada.2108@gmail.com")
+                .queryString("from", "tonni.giada.210802@gmail.com")
                 .queryString("to", recipient.getEmail())
                 .queryString("subject", "Benvenuto sulla piattaforma")
                 .queryString("text", "Ciao " + recipient.getNome() + ", la tua registrazione è andata a buon fine")

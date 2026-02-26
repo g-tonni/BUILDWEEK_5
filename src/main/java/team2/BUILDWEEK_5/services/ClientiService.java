@@ -58,12 +58,17 @@ public class ClientiService {
             throw new AlreadyExists("L'e-mail è già utilizzata.");
         }
 
+        if (clientiRepository.findByPartitaIva(clientiDTO.partitaIva()).isPresent()) {
+            throw new AlreadyExists("Il cliente con questa partita iva è già esistente");
+        }
+
         Contatto found = contattoService.findById(clientiDTO.idContatto());
 
         Indirizzo sedeLegaleFound = indirizziService.findById(clientiDTO.sedeLegaleId());
         Indirizzo sedeOperativaFound = indirizziService.findById(clientiDTO.sedeOperativaId());
 
         Cliente newCliente = new Cliente(
+                clientiDTO.nomeCliente(),
                 clientiDTO.ragioneSociale(),
                 clientiDTO.partitaIva(),
                 clientiDTO.email(),
@@ -98,6 +103,7 @@ public class ClientiService {
         Indirizzo sedeLegaleFound = this.indirizziService.findById(payload.sedeLegaleId());
         Indirizzo sedeOperativaFound = this.indirizziService.findById(payload.sedeOperativaId());
         Contatto contattoFound = contattoService.findById(payload.idContatto());
+        found.setNomeCliente(payload.nomeCliente());
         found.setRagioneSociale(payload.ragioneSociale());
         found.setEmail(payload.email());
         found.setDataUltimoContatto(payload.dataUltimoContatto());
@@ -127,5 +133,4 @@ public class ClientiService {
         Cliente found = this.findById(id);
         return found.getContatto();
     }
-
 }

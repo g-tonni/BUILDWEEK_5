@@ -26,7 +26,12 @@ public interface ClientiRepository extends JpaRepository<Cliente, UUID> {
 
     List<Cliente> findAllByDataInserimento(LocalDate dataInserimento);
 
-    Optional<Cliente> findByFatturatoAnnuale(String fatturatoAnnuale);
+    Optional<Cliente> findByPartitaIva(String partitaIva);
 
+    List<Cliente> findByFatturatoAnnualeGreaterThan(Double minFatturato);
 
+    List<Cliente> findByFatturatoAnnualeLessThan(Double minFatturato);
+
+    List<Cliente> findByFatturatoAnnualeBetween(Double minFatturato, Double maxFatturato);
+    
 }
