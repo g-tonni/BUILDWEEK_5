@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Cliente;
 import team2.BUILDWEEK_5.entities.Contatto;
@@ -13,6 +14,7 @@ import team2.BUILDWEEK_5.exceptions.AlreadyExists;
 import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.ClientiDTO;
 import team2.BUILDWEEK_5.repositories.ClientiRepository;
+import team2.BUILDWEEK_5.specifications.ClientiSpecifications;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -132,5 +134,34 @@ public class ClientiService {
     public Contatto getContattoByIdCliente(UUID id) {
         Cliente found = this.findById(id);
         return found.getContatto();
+    }
+
+    public Page<Cliente> filtraClienti(int page, int size, String orderBy, String sortCriteria, Double minFatturato, Double maxFatturato, LocalDate dataInserimento, LocalDate dataUltimoContatto, String partialName) {
+
+        Pageable pageable = PageRequest.of(page, size,
+                sortCriteria.equals("desc") ? Sort.by(orderBy).descending() : Sort.by(orderBy));
+
+        Specification<Cliente> spec = (root, query, cb) -> cb.conjunction();
+
+        if (minFatturato != null) {
+            spec = spec.and(ClientiSpecifications.fatturatoGreaterThanOrEqualTo(minFatturato));
+        }
+
+        if (maxFatturato != null) {
+            spec = spec.and(ClientiSpecifications.fatturatoLessThanOrEqualTo(maxFatturato));
+        }
+
+        if (dataInserimento != null) {
+            spec = spec.and(ClientiSpecifications.dataDiInserimentoEqualsTo(dataInserimento));
+        }
+
+        if (dataUltimoContatto != null) {
+            spec = spec.and(ClientiSpecifications.dataUltimoContattoEqualsTo(dataUltimoContatto));
+        }
+
+        if (partialName != null) {
+            spec = spec.and(ClientiSpecifications.partialNameEqualsTo(partialName));
+        }
+        return clientiRepository.findAll(spec, pageable);
     }
 }
