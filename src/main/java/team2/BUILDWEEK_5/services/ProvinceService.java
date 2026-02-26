@@ -59,6 +59,9 @@ public class ProvinceService {
         } else if (codiceProvincia.equals("CI")) {
             nomeDefinitivo = "Sud Sardegna";
             codiceProvinciaDefinitivo = "SU";
+        } else if (codiceProvincia.equals("Roma")) {
+            nomeDefinitivo = nome;
+            codiceProvinciaDefinitivo = "RM";
         } else {
             nomeDefinitivo = nome;
             codiceProvinciaDefinitivo = codiceProvincia;
