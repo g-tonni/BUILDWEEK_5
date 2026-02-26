@@ -17,6 +17,7 @@ import team2.BUILDWEEK_5.payloads.StatoFattureDTO;
 import team2.BUILDWEEK_5.services.FattureService;
 import team2.BUILDWEEK_5.services.StatoFattureService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,5 +85,22 @@ public class FattureController {
         } else {
             return this.fattureService.findByIdAndChangeState(idFattura, cambiaStatoFatturaDTO);
         }
+    }
+
+    @GetMapping("/search")
+    public Page<Fattura> search(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "cliente") String orderBy,
+            @RequestParam(defaultValue = "asc") String sortCriteria,
+            @RequestParam(required = false) UUID idCliente,
+            @RequestParam(required = false) String statoFattura,
+            @RequestParam(required = false) LocalDate dataEmissione,
+            @RequestParam(required = false) Integer annoEmissione,
+            @RequestParam(required = false) Integer minImporto,
+            @RequestParam(required = false) Integer maxImporto
+    ) {
+        
+        return fattureService.filtraFatture(page, size, orderBy, sortCriteria, idCliente, statoFattura, dataEmissione, annoEmissione, minImporto, maxImporto);
     }
 }

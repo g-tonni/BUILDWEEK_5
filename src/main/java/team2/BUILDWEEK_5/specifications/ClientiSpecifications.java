@@ -1,12 +1,10 @@
 package team2.BUILDWEEK_5.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
 import team2.BUILDWEEK_5.entities.Cliente;
 
 import java.time.LocalDate;
 
-@Component
 public class ClientiSpecifications {
 
     public static Specification<Cliente> fatturatoGreaterThanOrEqualTo(Double minFatturato) {

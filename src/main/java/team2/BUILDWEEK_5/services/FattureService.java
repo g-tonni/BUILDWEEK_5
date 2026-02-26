@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import team2.BUILDWEEK_5.entities.Cliente;
 import team2.BUILDWEEK_5.entities.Fattura;
@@ -15,7 +16,9 @@ import team2.BUILDWEEK_5.exceptions.NotFoundException;
 import team2.BUILDWEEK_5.payloads.CambiaStatoFatturaDTO;
 import team2.BUILDWEEK_5.payloads.FattureDTO;
 import team2.BUILDWEEK_5.repositories.FattureRepository;
+import team2.BUILDWEEK_5.specifications.FattureSpecifications;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -25,20 +28,14 @@ public class FattureService {
     private final FattureRepository fattureRepository;
     private final ClientiService clientiService;
     private final StatoFattureService statoFattureService;
+    private final FattureSpecifications fattureSpecifications;
 
     @Autowired
-    public FattureService(FattureRepository fattureRepository, ClientiService clientiService, StatoFattureService statoFattureService) {
+    public FattureService(FattureRepository fattureRepository, ClientiService clientiService, StatoFattureService statoFattureService, FattureSpecifications fattureSpecifications) {
         this.fattureRepository = fattureRepository;
         this.clientiService = clientiService;
         this.statoFattureService = statoFattureService;
-    }
-
-    public String extractUntil(String input, char target) {
-        if (input == null) {
-            return "";
-        }
-        int index = input.indexOf(target);
-        return (index == -1) ? input : input.substring(0, index);
+        this.fattureSpecifications = fattureSpecifications;
     }
 
     public Fattura saveFattura(FattureDTO payload) {
@@ -92,5 +89,38 @@ public class FattureService {
         fattureRepository.save(found);
 
         return found;
+    }
+
+    public Page<Fattura> filtraFatture(int page, int size, String orderBy, String sortCriteria, UUID idCliente, String statoFattura, LocalDate dataEmissione, Integer annoEmissione, Integer minImporto, Integer maxImporto) {
+
+        Pageable pageable = PageRequest.of(page, size,
+                sortCriteria.equals("desc") ? Sort.by(orderBy).descending() : Sort.by(orderBy));
+
+        Specification<Fattura> spec = (root, query, cb) -> cb.conjunction();
+
+        if (idCliente != null) {
+            spec = spec.and(fattureSpecifications.filtraFatturePerCliente(idCliente));
+        }
+
+        if (statoFattura != null) {
+            spec = spec.and(fattureSpecifications.filtraFatturePerStato(statoFattura));
+        }
+
+        if (dataEmissione != null) {
+            spec = spec.and(fattureSpecifications.dataDiEmissioneEqualsTo(dataEmissione));
+        }
+
+        if (annoEmissione != null) {
+            spec = spec.and(fattureSpecifications.annoDiEmissioneEqualsTo(annoEmissione));
+        }
+
+        if (minImporto != null && maxImporto != null) {
+            spec = spec.and(fattureSpecifications.importoFatturaBetween(minImporto, maxImporto));
+        } else if (minImporto != null) {
+            spec = spec.and(fattureSpecifications.importoFatturaGreaterThanOrEqualsTo(minImporto));
+        } else if (maxImporto != null) {
+            spec = spec.and(fattureSpecifications.importoFatturaLessThanOrEqualsTo(maxImporto));
+        }
+        return fattureRepository.findAll(spec, pageable);
     }
 }
