@@ -45,15 +45,6 @@ public class ClientiController {
         }
     }
 
-    @GetMapping
-    public Page<Cliente> findAll(@RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size,
-                                 @RequestParam(defaultValue = "nomeCliente") String orderBy,
-                                 @RequestParam(defaultValue = "asc") String sortCriteria) {
-
-        return this.clientiService.findAll(page, size, orderBy, sortCriteria);
-    }
-
     @GetMapping("/search")
     public Page<Cliente> search(
             @RequestParam(defaultValue = "0") int page,
