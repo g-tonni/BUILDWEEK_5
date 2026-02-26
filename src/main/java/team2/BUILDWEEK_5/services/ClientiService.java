@@ -136,7 +136,7 @@ public class ClientiService {
         return found.getContatto();
     }
 
-    public Page<Cliente> filtraClienti(int page, int size, String orderBy, String sortCriteria, Double minFatturato, Double maxFatturato, LocalDate dataInserimento, LocalDate dataUltimoContatto, String partialName) {
+    public Page<Cliente> filtraClienti(int page, int size, String orderBy, String sortCriteria, Double minFatturato, Double maxFatturato, LocalDate dataInserimento, LocalDate dataUltimoContatto, String partialName, String provincia) {
 
         Pageable pageable = PageRequest.of(page, size,
                 sortCriteria.equals("desc") ? Sort.by(orderBy).descending() : Sort.by(orderBy));
@@ -161,6 +161,10 @@ public class ClientiService {
 
         if (partialName != null) {
             spec = spec.and(ClientiSpecifications.partialNameEqualsTo(partialName));
+        }
+
+        if (provincia != null) {
+            spec = spec.and(ClientiSpecifications.provinciaEquals(provincia));
         }
         return clientiRepository.findAll(spec, pageable);
     }

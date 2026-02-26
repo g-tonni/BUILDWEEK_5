@@ -64,9 +64,10 @@ public class ClientiController {
             @RequestParam(required = false) Double maxFatturato,
             @RequestParam(required = false) LocalDate dataInserimento,
             @RequestParam(required = false) LocalDate dataUltimoContatto,
-            @RequestParam(required = false) String partialName
+            @RequestParam(required = false) String partialName,
+            @RequestParam(required = false) String provincia
     ) {
-        return clientiService.filtraClienti(page, size, orderBy, sortCriteria, minFatturato, maxFatturato, dataInserimento, dataUltimoContatto, partialName);
+        return clientiService.filtraClienti(page, size, orderBy, sortCriteria, minFatturato, maxFatturato, dataInserimento, dataUltimoContatto, partialName, provincia);
     }
 
     @GetMapping("/{id}")
