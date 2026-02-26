@@ -21,6 +21,9 @@ public class Cliente {
     private UUID idCliente;
 
     @Column(nullable = false)
+    private String nomeCliente;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RagioneSociale ragioneSociale;
 
@@ -64,17 +67,18 @@ public class Cliente {
 
     private LocalDate dataCancellazione;
 
-    public Cliente(
-            RagioneSociale ragioneSociale,
-            String partitaIva,
-            String email,
-            LocalDate dataUltimoContatto,
-            BigDecimal fatturatoAnnuale,
-            String pec,
-            String telefono,
-            Indirizzo sedeLegale,
-            Indirizzo sedeOperativa,
-            Contatto contatto) {
+    public Cliente(String nomeCliente,
+                   RagioneSociale ragioneSociale,
+                   String partitaIva,
+                   String email,
+                   LocalDate dataUltimoContatto,
+                   BigDecimal fatturatoAnnuale,
+                   String pec,
+                   String telefono,
+                   Indirizzo sedeLegale,
+                   Indirizzo sedeOperativa,
+                   Contatto contatto) {
+        this.nomeCliente = nomeCliente;
         this.ragioneSociale = ragioneSociale;
         this.partitaIva = partitaIva;
         this.email = email;

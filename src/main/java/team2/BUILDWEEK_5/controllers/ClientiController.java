@@ -14,6 +14,7 @@ import team2.BUILDWEEK_5.payloads.ContattoDTO;
 import team2.BUILDWEEK_5.services.ClientiService;
 import team2.BUILDWEEK_5.services.ContattoService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,20 +45,26 @@ public class ClientiController {
         }
     }
 
-    @GetMapping
-    public Page<Cliente> findAll(@RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size,
-                                 @RequestParam(defaultValue = "email") String orderBy,
-                                 @RequestParam(defaultValue = "asc") String sortCriteria) {
-
-        return this.clientiService.findAll(page, size, orderBy, sortCriteria);
+    @GetMapping("/search")
+    public Page<Cliente> search(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "nomeCliente") String orderBy,
+            @RequestParam(defaultValue = "asc") String sortCriteria,
+            @RequestParam(required = false) Double minFatturato,
+            @RequestParam(required = false) Double maxFatturato,
+            @RequestParam(required = false) LocalDate dataInserimento,
+            @RequestParam(required = false) LocalDate dataUltimoContatto,
+            @RequestParam(required = false) String partialName,
+            @RequestParam(required = false) String provincia
+    ) {
+        return clientiService.filtraClienti(page, size, orderBy, sortCriteria, minFatturato, maxFatturato, dataInserimento, dataUltimoContatto, partialName, provincia);
     }
 
     @GetMapping("/{id}")
     public Cliente findById(UUID id) {
         return this.clientiService.findById(id);
     }
-
 
 
     @PutMapping("/{id}")
@@ -91,11 +98,12 @@ public class ClientiController {
         return this.contattoService.findByIdAndUpdate(found.getIdContatto(), payload);
     }
 
-
     @PatchMapping("/{idCliente}/disattiva")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Cliente disattivaCliente(@PathVariable UUID idCliente) {
         return clientiService.disattivaCliente(idCliente);
     }
+
+
 }

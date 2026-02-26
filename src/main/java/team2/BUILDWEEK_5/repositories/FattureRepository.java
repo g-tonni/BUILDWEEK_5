@@ -1,6 +1,7 @@
 package team2.BUILDWEEK_5.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import team2.BUILDWEEK_5.entities.Fattura;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface FattureRepository extends JpaRepository<Fattura, UUID> {
+public interface FattureRepository extends JpaRepository<Fattura, UUID>, JpaSpecificationExecutor<Fattura> {
 
     List<Fattura> findByClienteAndDataFattura(UUID idCliente, LocalDate dataFattura);
 

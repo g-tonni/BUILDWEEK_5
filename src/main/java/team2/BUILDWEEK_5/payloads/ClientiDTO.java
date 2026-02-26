@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record ClientiDTO(
+        @NotBlank(message = "Il campo nome non può essere vuoto.")
+        String nomeCliente,
         @NotNull(message = "Il campo Ragione Sociale non può essere vuoto.")
         RagioneSociale ragioneSociale,
         @NotBlank(message = "Il campo Partita Iva non può essere vuoto.")
