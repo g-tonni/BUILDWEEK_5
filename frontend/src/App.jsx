@@ -13,9 +13,9 @@ function App() {
       <BrowserRouter>
         <MyNav />
         <Routes>
-          <Route path="/login" element={<MyForm />} />
+          {<Route path="/login" element={<MyForm />} />}
           <Route path="/signUp" element={<MyFormR />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="" element={<MyForm />} />
           <Route path="/fatture" element={<MyFatture />} />
         </Routes>
       </BrowserRouter>
