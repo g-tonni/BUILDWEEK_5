@@ -16,13 +16,13 @@ const navigate = useNavigate();
   const logIn=(e)=>{
     e.preventDefault();
   const url= `http://localhost:${port}/auth/login`
-  const token= localStorage.getItem('token')
   fetch(url,{
     method:'POST',
-    headers:{'Authorization': `Bearer ${token}`, 'Content-Type':'application/json'},
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify(form)
   })
   .then(res=>{if(res.ok){return res.json()} else {throw new Error ("Errore nella res")}})
+  .then(a=>{localStorage.setItem('token',a.token)})
   .then(()=>{setform({ email: '', password: '' });navigate('/')})
   .catch(err=>console.log(err))
 } 
