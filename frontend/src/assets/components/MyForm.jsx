@@ -22,7 +22,7 @@ const navigate = useNavigate();
     body:JSON.stringify(form)
   })
   .then(res=>{if(res.ok){return res.json()} else {throw new Error ("Errore nella res")}})
-  .then(a=>{localStorage.setItem('token',a.token)})
+  .then(a=>{localStorage.setItem('token',a.accessToken)})
   .then(()=>{setform({ email: '', password: '' });navigate('/')})
   .catch(err=>console.log(err))
 } 
