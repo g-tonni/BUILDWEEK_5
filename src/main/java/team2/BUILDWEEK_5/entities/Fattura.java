@@ -1,6 +1,5 @@
 package team2.BUILDWEEK_5.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties({"cliente"})
+//@JsonIgnoreProperties({"cliente"})
 public class Fattura {
 
     @Id
