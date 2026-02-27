@@ -1,8 +1,112 @@
 {
-  "hash": "60d3cde6",
+  "hash": "34db6a00",
   "configHash": "a5a842cc",
-  "lockfileHash": "46825c9b",
-  "browserHash": "fbb14a0b",
-  "optimized": {},
-  "chunks": {}
+  "lockfileHash": "10359cf1",
+  "browserHash": "c6abd3c4",
+  "optimized": {
+    "react-bootstrap/Button": {
+      "src": "../../node_modules/react-bootstrap/esm/Button.js",
+      "file": "react-bootstrap_Button.js",
+      "fileHash": "58e0711a",
+      "needsInterop": false
+    },
+    "react-bootstrap/Card": {
+      "src": "../../node_modules/react-bootstrap/esm/Card.js",
+      "file": "react-bootstrap_Card.js",
+      "fileHash": "d4addcaa",
+      "needsInterop": false
+    },
+    "react-bootstrap/Form": {
+      "src": "../../node_modules/react-bootstrap/esm/Form.js",
+      "file": "react-bootstrap_Form.js",
+      "fileHash": "1301ddd7",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "395be312",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "0deff895",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "d8e4d33f",
+      "needsInterop": true
+    },
+    "react-bootstrap/Container": {
+      "src": "../../node_modules/react-bootstrap/esm/Container.js",
+      "file": "react-bootstrap_Container.js",
+      "fileHash": "129138f7",
+      "needsInterop": false
+    },
+    "react-bootstrap/Nav": {
+      "src": "../../node_modules/react-bootstrap/esm/Nav.js",
+      "file": "react-bootstrap_Nav.js",
+      "fileHash": "54d9321c",
+      "needsInterop": false
+    },
+    "react-bootstrap/Navbar": {
+      "src": "../../node_modules/react-bootstrap/esm/Navbar.js",
+      "file": "react-bootstrap_Navbar.js",
+      "fileHash": "fe3a46c0",
+      "needsInterop": false
+    },
+    "react-bootstrap": {
+      "src": "../../node_modules/react-bootstrap/esm/index.js",
+      "file": "react-bootstrap.js",
+      "fileHash": "a7860b57",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-MEN5FSJR": {
+      "file": "chunk-MEN5FSJR.js"
+    },
+    "chunk-LCMZ4F2P": {
+      "file": "chunk-LCMZ4F2P.js"
+    },
+    "chunk-BPA7KIU3": {
+      "file": "chunk-BPA7KIU3.js"
+    },
+    "chunk-ANSER4YC": {
+      "file": "chunk-ANSER4YC.js"
+    },
+    "chunk-WPKBYW6Q": {
+      "file": "chunk-WPKBYW6Q.js"
+    },
+    "chunk-O3VFEIM4": {
+      "file": "chunk-O3VFEIM4.js"
+    },
+    "chunk-NOSD3EBE": {
+      "file": "chunk-NOSD3EBE.js"
+    },
+    "chunk-24AK3HS6": {
+      "file": "chunk-24AK3HS6.js"
+    },
+    "chunk-J25CPPPC": {
+      "file": "chunk-J25CPPPC.js"
+    },
+    "chunk-YOMYGNJO": {
+      "file": "chunk-YOMYGNJO.js"
+    },
+    "chunk-ZWMFE3QP": {
+      "file": "chunk-ZWMFE3QP.js"
+    },
+    "chunk-KEUCLHAN": {
+      "file": "chunk-KEUCLHAN.js"
+    },
+    "chunk-CQC52RUO": {
+      "file": "chunk-CQC52RUO.js"
+    },
+    "chunk-G4V7ITBN": {
+      "file": "chunk-G4V7ITBN.js"
+    }
+  }
 }
