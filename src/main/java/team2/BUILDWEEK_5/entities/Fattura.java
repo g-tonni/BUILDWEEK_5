@@ -12,7 +12,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties({"cliente"})
 public class Fattura {
 
     @Id
