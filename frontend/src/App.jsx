@@ -18,6 +18,7 @@ function App() {
       <Route path="/login" element={<MyForm/>} />
        <Route path="/signUp" element={<MyFormR/>} />
         <Route path="/home" element={<Home/>} />
+
     </Routes>
     </BrowserRouter>
       

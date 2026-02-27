@@ -23,7 +23,7 @@ const navigate = useNavigate();
   })
   .then(res=>{if(res.ok){return res.json()} else {throw new Error ("Errore nella res")}})
   .then(a=>{localStorage.setItem('token',a.accessToken)})
-  .then(()=>{setform({ email: '', password: '' });navigate('/')})
+  .then(()=>{setform({ email: '', password: '' });navigate('/fatture')})
   .catch(err=>console.log(err))
 } 
 
